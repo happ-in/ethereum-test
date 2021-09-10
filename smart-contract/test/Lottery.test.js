@@ -8,13 +8,26 @@ contract("Lottery", function ([deployer, user1, user2]) {
     lottery = await Lottery.new();
   });
 
-  it("Basic test", async () => {
-    console.log("Basic test");
-    let owner = await lottery.owner();
-    let value = await lottery.getSomeValue();
+  it("getPot should return current pot", async () => {
+    let pot = await lottery.getPot();
+    assert.equal(pot, 0);
+  });
 
-    console.log(`owner : ${owner}`);
-    console.log(`value : ${value}`);
-    assert.equal(value, 5);
+  describe("Bet", function () {
+    it.only("should fail when the bet money is not 0.005 ETH", async () => {
+      // fail transaction
+      await lottery.bet("0xab", { from: user1, value: 4 * 10 ** 15 });
+
+      // transaction object {chainId, value, to, from, gas(Limit), gasPrice}
+    });
+
+    it("should put the bet to the bet queue with 1 bet", async () => {
+      // bet
+      // check contract balance == 0.005 ETH
+      await lottery.bet("0xab", { from: user1, value: 5 * 10 ** 15 });
+
+      // check bet info
+      // check log (Emit event)
+    });
   });
 });
