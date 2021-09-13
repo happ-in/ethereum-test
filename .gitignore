@@ -1,1 +1,4 @@
 /smart-contract/build/*
+/smart-contract/node_modules/*
+
+*/package=lock.json
